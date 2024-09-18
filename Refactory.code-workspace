@@ -1,0 +1,1747 @@
+{
+	"folders": [
+		{
+			"name": "Refactory",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "/opt/unreal-engine"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Refactory Android Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Debug Cook+Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Debug",
+					"-ServerConfig=Debug",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Debug Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Debug Cook",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Debug",
+					"-ServerConfig=Debug",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Debug Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Debug Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Debug",
+					"-ServerConfig=Debug",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-DeploySoToDevice",
+					"-SkipCook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"Refactory Android Debug Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Android Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Cook+Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=DebugGame",
+					"-ServerConfig=DebugGame",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android DebugGame Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Cook",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=DebugGame",
+					"-ServerConfig=DebugGame",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android DebugGame Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=DebugGame",
+					"-ServerConfig=DebugGame",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-DeploySoToDevice",
+					"-SkipCook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"Refactory Android DebugGame Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Android DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Cook+Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Development",
+					"-ServerConfig=Development",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Development Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Cook",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Development",
+					"-ServerConfig=Development",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Development Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Development",
+					"-ServerConfig=Development",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-DeploySoToDevice",
+					"-SkipCook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"Refactory Android Development Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Android Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Cook+Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Test",
+					"-ServerConfig=Test",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Test Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Cook",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Test",
+					"-ServerConfig=Test",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Test Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Test",
+					"-ServerConfig=Test",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-DeploySoToDevice",
+					"-SkipCook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"Refactory Android Test Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Android Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Cook+Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Shipping",
+					"-ServerConfig=Shipping",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Shipping Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Cook",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Shipping",
+					"-ServerConfig=Shipping",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-Cook"
+				],
+				"dependsOn": [
+					"RefactoryEditor Linux Development Build",
+					"Refactory Android Shipping Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Deploy",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/RunUAT.sh",
+				"args": [
+					"BuildCookRun",
+					"-ScriptsForProject=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-Project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-noP4",
+					"-ClientConfig=Shipping",
+					"-ServerConfig=Shipping",
+					"-NoCompileEditor",
+					"-utf8output",
+					"-Platform=Android",
+					"-TargetPlatform=Android",
+					"-ini:Game:[/Script/UnrealEd.ProjectPackagingSettings]:BlueprintNativizationMethod=Disabled",
+					"-Compressed",
+					"-IterativeCooking",
+					"-IterativeDeploy",
+					"-DeploySoToDevice",
+					"-SkipCook",
+					"-Stage",
+					"-Deploy"
+				],
+				"dependsOn": [
+					"Refactory Android Shipping Build"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Android Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Android Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Android",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"Linux",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Test",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Refactory LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "Refactory LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Refactory",
+					"LinuxArm64",
+					"Shipping",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"RefactoryEditor Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Debug",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"RefactoryEditor Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"DebugGame",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"RefactoryEditor Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			},
+			{
+				"label": "RefactoryEditor Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"RefactoryEditor",
+					"Linux",
+					"Development",
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/opt/unreal-engine"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Refactory Oculus (Debug) Launch",
+				"request": "launch",
+				"preLaunchTask": "Refactory Android Debug Deploy",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Refactory Oculus (DebugGame) Launch",
+				"request": "launch",
+				"preLaunchTask": "Refactory Android DebugGame Deploy",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Refactory Oculus (Development) Launch",
+				"request": "launch",
+				"preLaunchTask": "Refactory Android Development Deploy",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Refactory Oculus (Development) Attach",
+				"request": "attach",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Refactory Oculus (Test) Launch",
+				"request": "launch",
+				"preLaunchTask": "Refactory Android Test Deploy",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Refactory Oculus (Shipping) Launch",
+				"request": "launch",
+				"preLaunchTask": "Refactory Android Shipping Deploy",
+				"type": "fb-lldb",
+				"android": {
+					"application": {
+						"package": "com.mistrjirka.Refactory",
+						"activity": "com.epicgames.unreal.GameActivity"
+					},
+					"lldbConfig": {
+						"librarySearchPaths": [
+							"\\\"/home/jirka/drive/Unreal Projects/Refactory/Binaries/Android/Refactory_Symbols_v1/Refactory-arm64\\\""
+						],
+						"lldbPreTargetCreateCommands": [
+							"command script import \\\"/opt/unreal-engine/Engine/Extras/LLDBDataFormatters/UEDataFormatters_2ByteChars.py\\\""
+						],
+						"lldbPostTargetCreateCommands": [
+							"process handle --pass true --stop false --notify true SIGILL"
+						]
+					}
+				}
+			},
+			{
+				"name": "Launch Refactory (Debug)",
+				"request": "launch",
+				"program": "/home/jirka/drive/Unreal Projects/Refactory/Binaries/Linux/UnrealGame-Linux-Debug",
+				"preLaunchTask": "Refactory Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Refactory (DebugGame)",
+				"request": "launch",
+				"program": "/home/jirka/drive/Unreal Projects/Refactory/Binaries/Linux/UnrealGame-Linux-DebugGame",
+				"preLaunchTask": "Refactory Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Refactory (Development)",
+				"request": "launch",
+				"program": "/home/jirka/drive/Unreal Projects/Refactory/Binaries/Linux/UnrealGame",
+				"preLaunchTask": "Refactory Linux Development Build",
+				"args": [
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Refactory (Test)",
+				"request": "launch",
+				"program": "/home/jirka/drive/Unreal Projects/Refactory/Binaries/Linux/UnrealGame-Linux-Test",
+				"preLaunchTask": "Refactory Linux Test Build",
+				"args": [
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Refactory (Shipping)",
+				"request": "launch",
+				"program": "/home/jirka/drive/Unreal Projects/Refactory/Binaries/Linux/UnrealGame-Linux-Shipping",
+				"preLaunchTask": "Refactory Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch RefactoryEditor (Debug)",
+				"request": "launch",
+				"program": "/opt/unreal-engine/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
+				"preLaunchTask": "RefactoryEditor Linux Debug Build",
+				"args": [
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject"
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch RefactoryEditor (DebugGame)",
+				"request": "launch",
+				"program": "/opt/unreal-engine/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+				"preLaunchTask": "RefactoryEditor Linux DebugGame Build",
+				"args": [
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject"
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch RefactoryEditor (Development)",
+				"request": "launch",
+				"program": "/opt/unreal-engine/Engine/Binaries/Linux/UnrealEditor",
+				"preLaunchTask": "RefactoryEditor Linux Development Build",
+				"args": [
+					"/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject"
+				],
+				"cwd": "/opt/unreal-engine",
+				"type": "cppdbg",
+				"visualizerFile": "/opt/unreal-engine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Linux Development Build",
+				"program": "/opt/unreal-engine/Engine/Build/BatchFiles/RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"console": "internalConsole",
+				"internalConsoleOptions": "openOnSessionStart",
+				"stopAtEntry": false,
+				"cwd": "/opt/unreal-engine"
+			}
+		]
+	}
+}
