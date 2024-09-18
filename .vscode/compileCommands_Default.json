@@ -1,0 +1,42 @@
+[
+	{
+		"file": "/home/jirka/drive/Unreal Projects/Refactory/Source/Refactory/Private/FastNoise.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/jirka/drive/Unreal Projects/Refactory/.vscode/compileCommands_Default/Refactory.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/jirka/drive/Unreal Projects/Refactory/Source/Refactory/Public/FastNoise.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/jirka/drive/Unreal Projects/Refactory/.vscode/compileCommands_Default/Refactory.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/jirka/drive/Unreal Projects/Refactory/Source/Refactory/Refactory.Build.cs",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/jirka/drive/Unreal Projects/Refactory/.vscode/compileCommands_Default/Refactory.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/jirka/drive/Unreal Projects/Refactory/Source/Refactory/Refactory.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/jirka/drive/Unreal Projects/Refactory/.vscode/compileCommands_Default/Refactory.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/jirka/drive/Unreal Projects/Refactory/Source/Refactory/Refactory.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/jirka/drive/Unreal Projects/Refactory/.vscode/compileCommands_Default/Refactory.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	}
+]
