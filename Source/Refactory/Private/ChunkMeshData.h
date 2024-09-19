@@ -14,4 +14,14 @@ public:
     TArray<int32> Triangles;
     TArray<FVector> Normals;
     TArray<FVector2D> UV0;
+
+    void Clear();
 };
+
+inline void FChunkMeshData::Clear()
+{
+    Vertices.Empty();
+    Triangles.Empty();
+    Normals.Empty();
+    UV0.Empty();
+}

@@ -91,3 +91,9 @@ bool AChunk::Check(FVector Position) const
 	return Blocks[GetBlockIndex(Position.X, Position.Y, Position.Z)] == EBlock::Air;
 }
 
+void AChunk::ModifyVoxelData(const FIntVector Position, EBlock ModifyTo)
+{
+	const int32 Index = GetBlockIndex(Position.X, Position.Y, Position.Z);
+	Blocks[Index] = ModifyTo;
+}
+

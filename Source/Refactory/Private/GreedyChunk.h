@@ -11,8 +11,6 @@
 #include "Refactory/Public/FastNoiseLite.h"
 #include "GreedyChunk.generated.h"
 
-enum class EBlock;
-class FastNoiseLite;
 class UProceduralMeshComponent;
 
 UCLASS()
@@ -34,5 +32,6 @@ protected:
 
 	virtual void GenerateMesh() override;
 	virtual void GenerateBlocks() override;
+	virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) override;
 
 };

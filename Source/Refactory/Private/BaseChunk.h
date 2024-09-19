@@ -14,8 +14,6 @@
 #include "BaseChunk.generated.h"
 
 
-enum class EDirection;
-enum class EBlock;
 class FastNoiseLite;
 class UProceduralMeshComponent;
 
@@ -35,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Chunk")
 	float Scale = 1.0;
     int VertexCount = 0;
+
+    UFUNCTION(BlueprintCallable, Category = "Chunk")
+    void ModifyVoxel(const FIntVector Position, EBlock ModifyTo);
 
 protected:
 	// Called when the game starts or when spawned
@@ -57,6 +58,10 @@ protected:
     virtual void GenerateBlocks() PURE_VIRTUAL(ABaseChunk::GenerateBlocks);
     
     virtual void GenerateMesh() PURE_VIRTUAL(ABaseChunk::GenerateMesh);
+
+    virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) PURE_VIRTUAL(ABaseChunk::ModifyVoxelData);
+
+    void ClearMesh();
     
     void ApplyMesh();
 };

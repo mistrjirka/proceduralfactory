@@ -13,8 +13,6 @@
 #include "Chunk.generated.h"
 
 
-enum class EDirection;
-enum class EBlock;
 class FastNoiseLite;
 class UProceduralMeshComponent;
 
@@ -55,7 +53,7 @@ private:
 protected:
 	virtual void GenerateMesh() override;
 	virtual void GenerateBlocks() override;
-	
+	virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) override;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

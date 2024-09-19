@@ -69,5 +69,30 @@ FVector ABaseChunk::GetPositionInDirection(EDirection Direction, FVector Positio
 
 void ABaseChunk::ApplyMesh() 
 {
-	Mesh->CreateMeshSection(0, MeshData.Vertices, MeshData.Triangles, MeshData.Normals,MeshData.UV0, TArray<FColor>(), TArray<FProcMeshTangent>(), true);
+	Mesh->CreateMeshSection(0, MeshData.Vertices, MeshData.Triangles, MeshData.Normals, MeshData.UV0, TArray<FColor>(), TArray<FProcMeshTangent>(), true);
+}
+
+void ABaseChunk::ClearMesh()
+{
+    MeshData.Clear();
+    VertexCount = 0;
+}
+
+void ABaseChunk::ModifyVoxel(const FIntVector Position, EBlock ModifyTo)
+{
+    if(Position.X < 0 || Position.X >= Size.X || Position.Y < 0 || Position.Y >= Size.Y || Position.Z < 0 || Position.Z >= Size.Z)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Invalid Position"));
+        return;
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("Modifying Voxel at Position: %s to %d"), *Position.ToString(), static_cast<uint8>(ModifyTo));
+
+    ModifyVoxelData(Position, ModifyTo);
+    
+    ClearMesh();
+
+    GenerateMesh();
+    
+    ApplyMesh();
 }

@@ -188,3 +188,11 @@ void AGreedyChunk::CreateQuad(FMask Mask, FIntVector AxisMask, FIntVector V1, FI
 
 		
 }
+
+void AGreedyChunk::ModifyVoxelData(const FIntVector Position, EBlock ModifyTo)
+{
+	const int32 Index = GetBlockIndex(Position.X, Position.Y, Position.Z);
+	Blocks[Index] = ModifyTo;
+
+	UE_LOG(LogTemp, Warning, TEXT("Modifying Voxel at Position: %s to %d"), *Position.ToString(), static_cast<uint8>(ModifyTo));
+}
