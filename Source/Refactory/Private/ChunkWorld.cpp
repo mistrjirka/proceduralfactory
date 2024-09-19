@@ -20,7 +20,7 @@ void AChunkWorld::BeginPlay()
 	{
 		for(int y = -DrawDistance; y <= DrawDistance; ++y)
 		{
-			GetWorld()->SpawnActor<AActor>(Chunk, FVector(x * ChunkSize * 100, y * ChunkSize * 100, 0), FRotator::ZeroRotator);
+			GetWorld()->SpawnActor<ABaseChunk>(Chunk, FVector(x * ChunkSize * 100, y * ChunkSize * 100, 0), FRotator::ZeroRotator);
 		}
 	}
 	

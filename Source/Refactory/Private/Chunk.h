@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
 
-
+#include "BaseChunk.h"
 #include "Enums.h"
 #include "Refactory/Public/FastNoiseLite.h"
 
@@ -19,33 +19,11 @@ class FastNoiseLite;
 class UProceduralMeshComponent;
 
 UCLASS()
-class REFACTORY_API AChunk : public AActor
+class REFACTORY_API AChunk : public ABaseChunk
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AChunk();
-
-	UPROPERTY(EditAnywhere, Category = "Chunk")
-	int32 Size = 32;
-
-	UPROPERTY(EditAnywhere, Category = "Chunk")
-	int32 Scale = 1;
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 private:
-	TObjectPtr<UProceduralMeshComponent> Mesh;
-	FastNoiseLite *Noise;
-
-	TArray<EBlock> Blocks;
-	TArray<FVector> VertexData;
-	TArray<int32> TriangleData;
-	TArray<FVector2D> UVData;
-
-	int32 VertexCount = 0;
 	//points on a cube
 	const FVector BlockVectorData[8] = {
 		FVector(100, 100, 100),
@@ -68,23 +46,16 @@ private:
 		3,2,7,6
 	};
 
-	void GenerateBlocks();
-
-	void GenerateMesh();
-
-	void ApplyMesh() const;
-
 	bool Check(FVector Position) const;
 
 	void CreateFace(EDirection Direction, FVector Position);
 
 	TArray<FVector> GetFaceVertices(EDirection Direction, FVector Position) const;
 
-	FVector GetPositionInDirection(EDirection Direction, FVector Position) const;
-
-	int32 GetBlockIndex(int32 X, int32 Y, int32 Z) const;
-
-
+protected:
+	virtual void GenerateMesh() override;
+	virtual void GenerateBlocks() override;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

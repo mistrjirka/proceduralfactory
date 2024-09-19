@@ -2,7 +2,7 @@
 # *DO NOT EDIT*
 
 UNREALROOTPATH = /opt/unreal-engine
-GAMEPROJECTFILE =/home/jirka/drive/Unreal Projects/Refactory/Refactory.uproject
+GAMEPROJECTFILE =/home/jirka/Dokumenty/Unreal Projects/proceduralfactory/Refactory.uproject
 
 TARGETS = \
 	Refactory-Linux-DebugGame  \

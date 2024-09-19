@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "BaseChunk.h"
 #include "ChunkWorld.generated.h"
 
 UCLASS()
@@ -15,7 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	AChunkWorld();
 	UPROPERTY(EditAnywhere, Category = "Chunk World")
-	TSubclassOf<AActor> Chunk;
+	TSubclassOf<ABaseChunk> Chunk;
 
 	UPROPERTY(EditAnywhere, Category = "Chunk World")
 	int DrawDistance = 5;
