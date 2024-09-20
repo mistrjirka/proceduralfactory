@@ -52,7 +52,6 @@ private:
 
 protected:
 	virtual void GenerateMesh() override;
-	virtual void GenerateBlocks() override;
 	virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) override;
 public:	
 	// Called every frame

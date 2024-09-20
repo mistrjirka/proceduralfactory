@@ -1,19 +1,32 @@
-#include "BaseChunk.h"
+#include "Refactory/Public/BaseChunk.h"
 
 ABaseChunk::ABaseChunk()
 {
     PrimaryActorTick.bCanEverTick = true;
     Mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("Mesh"));
-	Noise = new FastNoiseLite();
-	Noise->SetFrequency(0.03f);
-	Noise->SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-	Noise->SetFractalType(FastNoiseLite::FractalType_FBm);
-
-	Blocks.SetNum(Size.X * Size.Y * Size.Z);
-
-	Mesh->SetCastShadow(true);
-	SetRootComponent(Mesh);
+    Blocks.SetNum(Size.X * Size.Y * Size.Z);
+    Mesh->SetCastShadow(false);
+    SetRootComponent(Mesh);
 }
+
+void ABaseChunk::Initialize(UBaseTerrainGenerator* InTerrainGenerator)
+{
+    TerrainGenerator = InTerrainGenerator;
+
+    if (TerrainGenerator)
+    {
+        TerrainGenerator->GenerateTerrain(Blocks, GetActorLocation(), Size, Scale);
+        GenerateMesh();
+        ApplyMesh();
+
+        UE_LOG(LogTemp, Warning, TEXT("Vertex Count: %d"), VertexCount);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("TerrainGenerator is null!"));
+    }
+}
+
 
 int ABaseChunk::GetBlockIndex(int X, int Y, int Z) const
 {
@@ -23,11 +36,6 @@ int ABaseChunk::GetBlockIndex(int X, int Y, int Z) const
 void ABaseChunk::BeginPlay()
 {
     Super::BeginPlay();
-    GenerateBlocks();
-    GenerateMesh();
-    ApplyMesh();
-
-    UE_LOG(LogTemp, Warning, TEXT("Vertex Count: %d"), VertexCount);
 }
 
 EBlock ABaseChunk::GetBlock(FIntVector Index) const
@@ -86,7 +94,7 @@ void ABaseChunk::ModifyVoxel(const FIntVector Position, EBlock ModifyTo)
         return;
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("Modifying Voxel at Position: %s to %d"), *Position.ToString(), static_cast<uint8>(ModifyTo));
+    /*UE_LOG(LogTemp, Warning, TEXT("Modifying Voxel at Position: %s to %d"), *Position.ToString(), static_cast<uint8>(ModifyTo));*/
 
     ModifyVoxelData(Position, ModifyTo);
     

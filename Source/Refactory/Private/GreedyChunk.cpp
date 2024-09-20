@@ -3,33 +3,6 @@
 
 #include "GreedyChunk.h"
 
-
-void AGreedyChunk::GenerateBlocks()
-{
-	const auto Location = GetActorLocation();
-
-	for (int x = 0; x < Size.X; x++)
-	{
-		for (int y = 0; y < Size.Y; y++)
-		{
-			const float Xpos = (x * 100 + Location.X) / 100;
-			const float Ypos = (y * 100 + Location.Y) / 100;
-
-			const int Height = FMath::Clamp(FMath::RoundToInt((Noise->GetNoise(Xpos, Ypos) + 1) * Size.Z / 2), 0, Size.Z);
-
-			for (int z = 0; z < Height; z++)
-			{
-				Blocks[GetBlockIndex(x, y, z)] = EBlock::Stone;
-			}
-
-			for (int z = Height; z < Size.Z; z++)
-			{
-				Blocks[GetBlockIndex(x, y, z)] = EBlock::Air;
-			}
-			
-		}
-	}
-}
 bool AGreedyChunk::CompareMask(FMask M1, FMask M2) const
 {
 	return M1.Block == M2.Block && M1.Normal == M2.Normal;
