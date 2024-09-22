@@ -40,9 +40,9 @@ ABaseChunk::ABaseChunk()
     }
 
     // Initialize the material mapping
-    //BlockTypeMaterials.Add(EBlock::Grass, GrassMaterial);
-    //BlockTypeMaterials.Add(EBlock::Dirt, DirtMaterial);
-    //BlockTypeMaterials.Add(EBlock::Stone, StoneMaterial);
+    BlockTypeMaterials.Add(EBlock::Grass, GrassMaterial);
+    BlockTypeMaterials.Add(EBlock::Dirt, DirtMaterial);
+    BlockTypeMaterials.Add(EBlock::Stone, StoneMaterial);
     
 }
 

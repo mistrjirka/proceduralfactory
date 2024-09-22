@@ -29,7 +29,14 @@ private:
     FVector2D GetUVOffset(EBlock BlockType, const FVector& Normal);
 	bool CompareMask(FMask M1, FMask M2) const;
 protected:
-
+    void AdjustUVsForOrientation(
+		FVector2D& UV1,
+		FVector2D& UV2,
+		FVector2D& UV3,
+		FVector2D& UV4,
+		const FIntVector& AxisMask,
+		int32 NormalDirection
+	);
 	virtual void GenerateMesh() override;
 	virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) override;
 

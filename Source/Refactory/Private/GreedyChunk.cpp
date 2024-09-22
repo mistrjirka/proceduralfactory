@@ -131,7 +131,44 @@ void AGreedyChunk::GenerateMesh()
 		}
 	}
 }
+void AGreedyChunk::AdjustUVsForOrientation(
+    FVector2D& UV1,
+    FVector2D& UV2,
+    FVector2D& UV3,
+    FVector2D& UV4,
+    const FIntVector& AxisMask,
+    int32 NormalDirection)
+{
+    // Determine U and V axes based on the normal
+    int UAxis = 0;
+    int VAxis = 0;
 
+    if (AxisMask.X != 0)
+    {
+        // X-axis normal, so U and V are Y and Z
+        UAxis = 1;
+        VAxis = 2;
+    }
+    else if (AxisMask.Y != 0)
+    {
+        // Y-axis normal, so U and V are X and Z
+        UAxis = 0;
+        VAxis = 2;
+    }
+    else if (AxisMask.Z != 0)
+    {
+        // Z-axis normal, so U and V are X and Y
+        UAxis = 0;
+        VAxis = 1;
+    }
+
+    // Swap UVs if normal is negative
+    if (NormalDirection == -1)
+    {
+        Swap(UV1, UV2);
+        Swap(UV3, UV4);
+    }
+}
 
 void AGreedyChunk::CreateQuad(
     FMask Mask,
@@ -149,18 +186,32 @@ void AGreedyChunk::CreateQuad(
     FChunkMeshSection& MeshSection = MeshData.Sections.FindOrAdd(Mask.Block);
 
     // Add vertices
-    MeshSection.Vertices.Add(FVector(V1) * 100);
-    MeshSection.Vertices.Add(FVector(V2) * 100);
-    MeshSection.Vertices.Add(FVector(V3) * 100);
-    MeshSection.Vertices.Add(FVector(V4) * 100);
+    MeshSection.Vertices.Add(FVector(V1) * Scale);
+    MeshSection.Vertices.Add(FVector(V2) * Scale);
+    MeshSection.Vertices.Add(FVector(V3) * Scale);
+    MeshSection.Vertices.Add(FVector(V4) * Scale);
 
-    // Add triangles
-    MeshSection.Triangles.Add(MeshSection.VertexCount);
-    MeshSection.Triangles.Add(MeshSection.VertexCount + 2 + Mask.Normal);
-    MeshSection.Triangles.Add(MeshSection.VertexCount + 2 - Mask.Normal);
-    MeshSection.Triangles.Add(MeshSection.VertexCount + 3);
-    MeshSection.Triangles.Add(MeshSection.VertexCount + 1 - Mask.Normal);
-    MeshSection.Triangles.Add(MeshSection.VertexCount + 1 + Mask.Normal);
+    // Add triangles with correct winding order
+    if (Mask.Normal == 1)
+    {
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 0);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 2);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 1);
+
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 1);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 2);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 3);
+    }
+    else
+    {
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 0);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 1);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 2);
+
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 1);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 3);
+        MeshSection.Triangles.Add(MeshSection.VertexCount + 2);
+    }
 
     // Add normals
     MeshSection.Normals.Add(Normal);
@@ -168,11 +219,56 @@ void AGreedyChunk::CreateQuad(
     MeshSection.Normals.Add(Normal);
     MeshSection.Normals.Add(Normal);
 
+    // Calculate UVs based on quad size and orientation
+    FVector2D UV0(0.0f, 0.0f);
+    FVector2D UV1(Width * 1.0f, 0.0f);
+    FVector2D UV2(0.0f, Height * 1.0f);
+    FVector2D UV3(Width * 1.0f, Height * 1.0f);
+
+    // Correct UV mapping based on face orientation
+    if (AxisMask.X != 0)
+    {
+        // Quad is on YZ plane
+        // U corresponds to Y-axis (Axis1)
+        // V corresponds to Z-axis (Axis2)
+        UV0 = FVector2D(0.0f, 0.0f);
+        UV1 = FVector2D(Width * 1.0f, 0.0f);
+        UV2 = FVector2D(0.0f, Height * 1.0f);
+        UV3 = FVector2D(Width * 1.0f, Height * 1.0f);
+    }
+    else if (AxisMask.Y != 0)
+    {
+        // Quad is on XZ plane
+        // U corresponds to X-axis (Axis1)
+        // V corresponds to Z-axis (Axis2)
+        UV0 = FVector2D(0.0f, 0.0f);
+        UV1 = FVector2D(Width * 1.0f, 0.0f);
+        UV2 = FVector2D(0.0f, Height * 1.0f);
+        UV3 = FVector2D(Width * 1.0f, Height * 1.0f);
+    }
+    else if (AxisMask.Z != 0)
+    {
+        // Quad is on XY plane
+        // U corresponds to X-axis (Axis1)
+        // V corresponds to Y-axis (Axis2)
+        UV0 = FVector2D(0.0f, 0.0f);
+        UV1 = FVector2D(Width * 1.0f, 0.0f);
+        UV2 = FVector2D(0.0f, Height * 1.0f);
+        UV3 = FVector2D(Width * 1.0f, Height * 1.0f);
+    }
+
+    // Swap UVs if normal is negative to correct texture orientation
+    if (Mask.Normal == -1)
+    {
+        Swap(UV0, UV1);
+        Swap(UV2, UV3);
+    }
+
     // Add UVs
-    MeshSection.UV0.Add(FVector2D(0, 0));
-    MeshSection.UV0.Add(FVector2D(0, 1));
-    MeshSection.UV0.Add(FVector2D(1, 0));
-    MeshSection.UV0.Add(FVector2D(1, 1));
+    MeshSection.UV0.Add(UV0);
+    MeshSection.UV0.Add(UV1);
+    MeshSection.UV0.Add(UV2);
+    MeshSection.UV0.Add(UV3);
 
     // Update VertexCount
     MeshSection.VertexCount += 4;
