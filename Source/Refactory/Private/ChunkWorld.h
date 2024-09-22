@@ -8,11 +8,11 @@
 #include "ChunkWorld.generated.h"
 
 UCLASS()
-class AChunkWorld : public AActor
+class REFACTORY_API AChunkWorld : public AActor
 {
     GENERATED_BODY()
 
-public:    
+public:
     // Sets default values for this actor's properties
     AChunkWorld();
 
@@ -20,10 +20,7 @@ public:
     TSubclassOf<ABaseChunk> Chunk;
 
     UPROPERTY(EditAnywhere, Category = "Chunk World")
-    TSubclassOf<UBaseTerrainGenerator> TerrainGenerator;
-    
-    UPROPERTY(EditAnywhere, Category = "Chunk World")
-    TArray<TObjectPtr<AActor>> generatorActors;
+    TArray<TSubclassOf<AActor>> generatorActors;
 
     UPROPERTY(EditAnywhere, Category = "Chunk World")
     int DrawDistance = 5;
@@ -31,10 +28,19 @@ public:
     UPROPERTY(EditAnywhere, Category = "Chunk World")
     int ChunkSize = 32;
 
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
+
 protected:
+    bool loaded = false;
+
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
 
-    // Use raw pointer or TWeakObjectPtr for TerrainGenerator
-    UBaseTerrainGenerator* TerrainGeneratorInstance;
+    void GenerateTerrainAroundActor(AActor* actor);
+
+    TMap<FIntVector, ABaseChunk*> Chunks;
+
+    TArray<AActor*> generatorActorInstances;
+
 };

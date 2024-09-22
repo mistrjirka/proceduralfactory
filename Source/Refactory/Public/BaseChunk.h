@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
-#include "Refactory/Public/BaseTerrainGenerator.h"
 #include "Refactory/Public/ChunkMeshData.h"
 
 #include "Enums.h"
@@ -35,16 +34,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Chunk")
     void ModifyVoxel(const FIntVector Position, EBlock ModifyTo);
 
-    // Custom initializer function
-    void Initialize(UBaseTerrainGenerator* InTerrainGenerator);
 
 protected:
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
 
     TObjectPtr<UProceduralMeshComponent> Mesh;
-
-    UBaseTerrainGenerator* TerrainGenerator;
 
     FChunkMeshData MeshData;
 
@@ -59,6 +54,8 @@ protected:
     virtual void GenerateMesh() PURE_VIRTUAL(ABaseChunk::GenerateMesh);
 
     virtual void ModifyVoxelData(const FIntVector Position, EBlock ModifyTo) PURE_VIRTUAL(ABaseChunk::ModifyVoxelData);
+
+    void LoadChunkData();
 
     void ClearMesh();
     

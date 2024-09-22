@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class UVoxelFunctionLibrary : public UBlueprintFunctionLibrary
+class REFACTORY_API UVoxelFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

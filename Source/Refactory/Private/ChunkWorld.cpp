@@ -1,57 +1,106 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "ChunkWorld.h"
 #include <chrono>
-#include <iostream>
-#include "PerlinBasicTerrainGenerator.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AChunkWorld::AChunkWorld()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void AChunkWorld::BeginPlay()
 {
     Super::BeginPlay();
+    SetActorTickEnabled(true);
 
-    // Ensure TerrainGenerator is set to a valid class before proceeding
-    if (!TerrainGenerator)
+    // Get all instances of generator actors
+    for (auto& actorClass : generatorActors)
     {
-        UE_LOG(LogTemp, Error, TEXT("TerrainGenerator class is not set!"));
-        return;
+        UGameplayStatics::GetAllActorsOfClass(GetWorld(), actorClass, generatorActorInstances);
     }
 
-    // Create an instance of the terrain generator using NewObject
-    TerrainGeneratorInstance = NewObject<UPerlinBasicTerrainGenerator>(this, TerrainGenerator);
+    // Set loaded to true to enable ticking
+    loaded = true;
+}
 
-    // Ensure that the generator was created successfully
-    if (!TerrainGeneratorInstance)
+void AChunkWorld::Tick(float DeltaTime)
+{
+    if (!loaded)
     {
-        UE_LOG(LogTemp, Error, TEXT("Failed to create TerrainGenerator instance"));
         return;
     }
+    Super::Tick(DeltaTime);
 
-    // measure time taken to generate terrain
-    auto start = std::chrono::high_resolution_clock::now();
+    // Set to keep track of all chunks that should be loaded
+    TSet<FIntVector> DesiredChunks;
 
-
-    // Proceed with spawning chunks and initializing them
-    for (int x = -DrawDistance; x <= DrawDistance; ++x)
+    // For each generator actor
+    for (auto& actor : generatorActorInstances)
     {
-        for (int y = -DrawDistance; y <= DrawDistance; ++y)
+        // Get the actor's location
+        FVector actorLocation = actor->GetActorLocation();
+
+        // Calculate the chunk coordinates for the actor
+        int chunkX = FMath::FloorToInt(actorLocation.X / (ChunkSize * 100));
+        int chunkY = FMath::FloorToInt(actorLocation.Y / (ChunkSize * 100));
+
+        // Iterate over the chunks around the actor within the draw distance
+        for (int x = -DrawDistance; x <= DrawDistance; ++x)
         {
-            ABaseChunk* SpawnedChunk = GetWorld()->SpawnActor<ABaseChunk>(Chunk, FVector(x * ChunkSize * 100, y * ChunkSize * 100, 0), FRotator::ZeroRotator);
-            if (SpawnedChunk)
+            for (int y = -DrawDistance; y <= DrawDistance; ++y)
             {
-                // Initialize the chunk with the terrain generator instance
-                SpawnedChunk->Initialize(TerrainGeneratorInstance);
+                // Calculate the chunk coordinates
+                int chunkCoordX = chunkX + x;
+                int chunkCoordY = chunkY + y;
+
+                FIntVector ChunkKey(chunkCoordX, chunkCoordY, 0);
+
+                // Add the chunk coordinate to the desired set
+                DesiredChunks.Add(ChunkKey);
+
+                // If the chunk is already loaded, skip spawning
+                if (Chunks.Contains(ChunkKey))
+                {
+                    continue;
+                }
+
+                // Spawn a new chunk
+                ABaseChunk* SpawnedChunk = GetWorld()->SpawnActor<ABaseChunk>(
+                    Chunk,
+                    FVector(chunkCoordX * ChunkSize * 100, chunkCoordY * ChunkSize * 100, 0),
+                    FRotator::ZeroRotator
+                );
+                if (SpawnedChunk)
+                {
+
+                    // Add the chunk to the map
+                    Chunks.Add(ChunkKey, SpawnedChunk);
+                }
             }
         }
     }
 
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    UE_LOG(LogTemp, Warning, TEXT("Time taken to generate terrain: %f"), elapsed.count());
+    // Identify and remove chunks that are no longer needed
+    TArray<FIntVector> ChunksToRemove;
+    for (const auto& Pair : Chunks)
+    {
+        if (!DesiredChunks.Contains(Pair.Key))
+        {
+            ChunksToRemove.Add(Pair.Key);
+        }
+    }
+
+    // Remove the unnecessary chunks
+    int removed = 0;
+    for (const auto& ChunkKey : ChunksToRemove)
+    {
+        if (ABaseChunk* ChunkToRemove = Chunks[ChunkKey])
+        {
+            ChunkToRemove->Destroy();
+            removed++;
+        }
+        Chunks.Remove(ChunkKey);
+    }
+    if(removed)
+    UE_LOG(LogTemp, Warning, TEXT("Removed %d chunks"), removed);
 }

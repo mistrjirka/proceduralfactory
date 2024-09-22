@@ -14,7 +14,7 @@
 class UProceduralMeshComponent;
 
 UCLASS()
-class AGreedyChunk : public ABaseChunk
+class REFACTORY_API AGreedyChunk : public ABaseChunk
 {
 	GENERATED_BODY()
 
