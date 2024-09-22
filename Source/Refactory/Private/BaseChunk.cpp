@@ -1,14 +1,51 @@
+#include "Refactory/Public/ChunkWorld.h"
 #include "Refactory/Public/BaseChunk.h"
-#include "BaseChunk.h"
 
 ABaseChunk::ABaseChunk()
 {
     PrimaryActorTick.bCanEverTick = false;
     Mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("Mesh"));
-    Blocks.Init(EBlock::Air, Size.X * Size.Y * Size.Z);
     Mesh->SetCastShadow(false);
     SetRootComponent(Mesh);
+    this->Scale = 100.0f;
+    static ConstructorHelpers::FObjectFinder<UMaterialInterface> GrassMat(TEXT("/Game/StarterContent/Materials/M_Ground_Moss.M_Ground_Moss"));
+    static ConstructorHelpers::FObjectFinder<UMaterialInterface> DirtMat(TEXT("/Game/StarterContent/Materials/M_Brick_Cut_Stone.M_Brick_Cut_Stone"));
+    static ConstructorHelpers::FObjectFinder<UMaterialInterface> StoneMat(TEXT("/Game/StarterContent/Materials/M_Concrete_Grime.M_Concrete_Grime"));
+
+    if (GrassMat.Succeeded())
+    {
+        GrassMaterial = GrassMat.Object;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to load GrassMaterial"));
+    }
+
+    if (DirtMat.Succeeded())
+    {
+        DirtMaterial = DirtMat.Object;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to load DirtMaterial"));
+    }
+
+    if (StoneMat.Succeeded())
+    {
+        StoneMaterial = StoneMat.Object;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to load StoneMaterial"));
+    }
+
+    // Initialize the material mapping
+    //BlockTypeMaterials.Add(EBlock::Grass, GrassMaterial);
+    //BlockTypeMaterials.Add(EBlock::Dirt, DirtMaterial);
+    //BlockTypeMaterials.Add(EBlock::Stone, StoneMaterial);
+    
 }
+
 
 
 
@@ -19,6 +56,7 @@ int ABaseChunk::GetBlockIndex(int X, int Y, int Z) const
 
 void ABaseChunk::BeginPlay()
 {
+    Blocks.Init(EBlock::Air, Size.X * Size.Y * Size.Z);
     Super::BeginPlay();
     LoadChunkData();
 }
@@ -58,10 +96,48 @@ FVector ABaseChunk::GetPositionInDirection(EDirection Direction, FVector Positio
         return FVector(0, 0, 0);
     }
 }
+// BaseChunk.cpp
+
+UMaterialInterface* ABaseChunk::GetMaterialForBlockType(EBlock BlockType) const
+{
+    UMaterialInterface* const* FoundMaterial = BlockTypeMaterials.Find(BlockType);
+    if (FoundMaterial)
+    {
+        return *FoundMaterial;
+    }
+    return nullptr;
+}
 
 void ABaseChunk::ApplyMesh()
 {
-    Mesh->CreateMeshSection(0, MeshData.Vertices, MeshData.Triangles, MeshData.Normals, MeshData.UV0, TArray<FColor>(), TArray<FProcMeshTangent>(), true);
+    Mesh->ClearAllMeshSections();
+
+    int32 SectionIndex = 0;
+    for (const auto& Pair : MeshData.Sections)
+    {
+        EBlock BlockType = Pair.Key;
+        const FChunkMeshSection& Section = Pair.Value;
+
+        // Create mesh section
+        Mesh->CreateMeshSection(
+            SectionIndex,
+            Section.Vertices,
+            Section.Triangles,
+            Section.Normals,
+            Section.UV0,
+            TArray<FColor>(),
+            TArray<FProcMeshTangent>(),
+            true);
+
+        // Assign material to the section
+        UMaterialInterface* Material = GetMaterialForBlockType(BlockType);
+        if (Material)
+        {
+            Mesh->SetMaterial(SectionIndex, Material);
+        }
+
+        SectionIndex++;
+    }
 }
 
 void ABaseChunk::LoadChunkData()
@@ -73,8 +149,8 @@ void ABaseChunk::LoadChunkData()
     {
         for (int y = 0; y < Size.Y; y++)
         {
-            const float Xpos = (x * 100 + Location.X) / 100;
-            const float Ypos = (y * 100 + Location.Y) / 100;
+            const float Xpos = (x * Scale + Location.X) / Scale;
+            const float Ypos = (y * Scale + Location.Y) / Scale;
 
             const int Height = 10; // FMath::Clamp(FMath::RoundToInt((Noise->GetNoise(Xpos, Ypos) + 1) * Size.Z / 2), 0, Size.Z);
 
@@ -118,4 +194,9 @@ void ABaseChunk::ModifyVoxel(const FIntVector Position, EBlock ModifyTo)
     GenerateMesh();
 
     ApplyMesh();
+}
+
+void ABaseChunk::Init(AChunkWorld* W)
+{
+    this->World = W;
 }

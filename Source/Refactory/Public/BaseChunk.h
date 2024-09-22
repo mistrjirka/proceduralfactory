@@ -6,14 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
 #include "Refactory/Public/ChunkMeshData.h"
+#include "Refactory/Public/ChunkWorld.h"
 
 #include "Enums.h"
 
 #include "BaseChunk.generated.h"
 
 
-class FastNoiseLite;
-class UProceduralMeshComponent;
 UCLASS(Abstract)
 class REFACTORY_API ABaseChunk : public AActor
 {
@@ -27,17 +26,35 @@ public:
     FIntVector Size = FIntVector(1,1,1) * 32;
 
     UPROPERTY(EditAnywhere, Category = "Chunk")
-    float Scale = 1.0;
+    float Scale = 100.0;
+
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TMap<EBlock, UMaterialInterface*> BlockTypeMaterials;
+
+    UMaterialInterface* GetMaterialForBlockType(EBlock BlockType) const;
 
     int VertexCount = 0;
 
     UFUNCTION(BlueprintCallable, Category = "Chunk")
     void ModifyVoxel(const FIntVector Position, EBlock ModifyTo);
 
+    void Init(AChunkWorld* W);
+
 
 protected:
+    UPROPERTY()
+    UMaterialInterface* GrassMaterial;
+
+    UPROPERTY()
+    UMaterialInterface* DirtMaterial;
+
+    UPROPERTY()
+    UMaterialInterface* StoneMaterial;
+
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
+
+    TWeakObjectPtr<AChunkWorld> World;
 
     TObjectPtr<UProceduralMeshComponent> Mesh;
 

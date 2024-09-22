@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BaseChunk.h"
+#include "WorldGenerator.h"
+
 #include "ChunkWorld.generated.h"
+
+class ABaseChunk;
 
 UCLASS()
 class REFACTORY_API AChunkWorld : public AActor
@@ -17,7 +20,7 @@ public:
     AChunkWorld();
 
     UPROPERTY(EditAnywhere, Category = "Chunk World")
-    TSubclassOf<ABaseChunk> Chunk;
+    TSubclassOf<ABaseChunk> ChunkType;
 
     UPROPERTY(EditAnywhere, Category = "Chunk World")
     TArray<TSubclassOf<AActor>> generatorActors;
@@ -28,10 +31,17 @@ public:
     UPROPERTY(EditAnywhere, Category = "Chunk World")
     int ChunkSize = 32;
 
+    UPROPERTY(EditAnywhere, Category = "Chunk World")
+    TSubclassOf<UWorldGenerator> WorldGeneratorClass;
+
+
     // Called every frame
     virtual void Tick(float DeltaTime) override;
 
+    TObjectPtr<UWorldGenerator> WG;
 protected:
+    float Scale = 100.0;
+
     bool loaded = false;
 
     // Called when the game starts or when spawned

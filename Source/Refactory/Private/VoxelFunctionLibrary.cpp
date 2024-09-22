@@ -4,7 +4,7 @@
 
 FIntVector UVoxelFunctionLibrary::WorldToBlockPosition(const FVector &Position)
 {
-    return FIntVector(Position) / 100;
+    return FIntVector(Position) / Scale;
 }
 
 FIntVector UVoxelFunctionLibrary::WorldToLocalBlockPosition(const FVector &Position, const int32 Size)
@@ -26,7 +26,7 @@ FIntVector UVoxelFunctionLibrary::WorldToChunkPosition(const FVector &Position, 
 {
     FIntVector Result;
 
-    const int Factor = Size * 100;
+    const int Factor = Size * Scale;
     const auto IntPosition = FIntVector(Position);
     Result.X = static_cast<int>(Position.X / Factor) - static_cast<int>(IntPosition.X < 0);
     Result.Y = static_cast<int>(Position.Y / Factor) - static_cast<int>(IntPosition.Y < 0);

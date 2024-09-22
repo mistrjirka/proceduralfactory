@@ -1,4 +1,5 @@
-#include "ChunkWorld.h"
+#include "Refactory/Public/BaseChunk.h"
+#include "Refactory/Public/ChunkWorld.h"
 #include <chrono>
 #include "Kismet/GameplayStatics.h"
 
@@ -12,7 +13,7 @@ void AChunkWorld::BeginPlay()
 {
     Super::BeginPlay();
     SetActorTickEnabled(true);
-
+    WG = NewObject<UWorldGenerator>(WorldGeneratorClass.GetDefaultObject());
     // Get all instances of generator actors
     for (auto& actorClass : generatorActors)
     {
@@ -41,8 +42,8 @@ void AChunkWorld::Tick(float DeltaTime)
         FVector actorLocation = actor->GetActorLocation();
 
         // Calculate the chunk coordinates for the actor
-        int chunkX = FMath::FloorToInt(actorLocation.X / (ChunkSize * 100));
-        int chunkY = FMath::FloorToInt(actorLocation.Y / (ChunkSize * 100));
+        int chunkX = FMath::FloorToInt(actorLocation.X / (ChunkSize * Scale));
+        int chunkY = FMath::FloorToInt(actorLocation.Y / (ChunkSize * Scale));
 
         // Iterate over the chunks around the actor within the draw distance
         for (int x = -DrawDistance; x <= DrawDistance; ++x)
@@ -63,16 +64,17 @@ void AChunkWorld::Tick(float DeltaTime)
                 {
                     continue;
                 }
+                UE_LOG(LogTemp, Warning, TEXT("Spawning chunk at %d, %d"), chunkCoordX, chunkCoordY);
 
                 // Spawn a new chunk
                 ABaseChunk* SpawnedChunk = GetWorld()->SpawnActor<ABaseChunk>(
-                    Chunk,
-                    FVector(chunkCoordX * ChunkSize * 100, chunkCoordY * ChunkSize * 100, 0),
+                    ChunkType,
+                    FVector(chunkCoordX * ChunkSize * Scale, chunkCoordY * ChunkSize * Scale, 0),
                     FRotator::ZeroRotator
                 );
                 if (SpawnedChunk)
                 {
-
+                    SpawnedChunk->Init(this);
                     // Add the chunk to the map
                     Chunks.Add(ChunkKey, SpawnedChunk);
                 }

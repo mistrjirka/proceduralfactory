@@ -25,8 +25,8 @@ class REFACTORY_API AGreedyChunk : public ABaseChunk
 	};
 
 private:
-	void CreateQuad(FMask Mask, FIntVector AxisMask, FIntVector V1, FIntVector V2, FIntVector V3, FIntVector V4);
-
+	void CreateQuad(FMask Mask, FIntVector AxisMask, const int Width, const int Height, FIntVector V1, FIntVector V2, FIntVector V3, FIntVector V4);
+    FVector2D GetUVOffset(EBlock BlockType, const FVector& Normal);
 	bool CompareMask(FMask M1, FMask M2) const;
 protected:
 
